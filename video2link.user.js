@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         video2link
 // @namespace    video2link
-// @version      0.5
+// @version      0.7
 // @description  video tag to url link
 // @author       miszel
 // @match        *://*/*
@@ -59,7 +59,7 @@
     };
 
     var divV = document.createElement('div');
-    divV.style.position = 'fixed';
+    divV.style.position = 'absolute';
     divV.style.top = Math.floor((Math.random() * 100) + 1) + 'px';
     divV.style.left = Math.floor((Math.random() * 50) + 1) + 'px';
     divV.style.backgroundColor = '#FF0000';
@@ -72,8 +72,38 @@
     divV.style.cursor = 'pointer';
     divV.style.zIndex = 2147483647;
     divV.style.borderRadius = '5px';
+    divV.style.mozUserSelect = 'none !important';
     divV.innerText = '\u25B6';
-    divV.onclick = searchVideo;
+    //divV.onclick = searchVideo;
     document.body.appendChild(divV);
+
+    var mousePosition;
+    var offset = [0,0];
+    var flag = 0;
+
+    divV.addEventListener('mousedown', function(e) {
+        flag = 1;
+        offset = [
+            divV.offsetLeft - e.clientX,
+            divV.offsetTop - e.clientY
+        ];
+    }, true);
+
+    document.addEventListener('mouseup', function() {
+        if (flag == 1) searchVideo();
+        flag = 0;
+    }, true);
+
+    document.addEventListener('mousemove', function(event) {
+        if (flag >= 1) {
+            flag = 2;
+            mousePosition = {
+                x : event.clientX,
+                y : event.clientY
+            };
+            divV.style.left = (mousePosition.x + offset[0]) + 'px';
+            divV.style.top = (mousePosition.y + offset[1]) + 'px';
+        }
+    }, true);
 
 })();
