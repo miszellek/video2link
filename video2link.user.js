@@ -1,13 +1,14 @@
 // ==UserScript==
 // @name         video2link
 // @namespace    video2link
-// @version      0.7
+// @version      0.8
 // @description  video tag to url link
 // @author       miszel
 // @match        *://*/*
 // @grant        none
 // @license      MIT
 // ==/UserScript==
+
 
 (function () {
     'use strict';
@@ -72,38 +73,44 @@
     divV.style.cursor = 'pointer';
     divV.style.zIndex = 2147483647;
     divV.style.borderRadius = '5px';
-    divV.style.mozUserSelect = 'none !important';
+    divV.style.userSelect = 'none';
+    divV.style.setProperty ('-moz-user-select', 'none', 'important');
     divV.innerText = '\u25B6';
     //divV.onclick = searchVideo;
     document.body.appendChild(divV);
 
     var mousePosition;
-    var offset = [0,0];
+    var offset = [0, 0];
     var flag = 0;
 
-    divV.addEventListener('mousedown', function(e) {
-        flag = 1;
-        offset = [
-            divV.offsetLeft - e.clientX,
-            divV.offsetTop - e.clientY
-        ];
-    }, true);
+    ['mousedown', 'touchstart'].forEach(function (e) {
+        divV.addEventListener(e, function (event) {
+            flag = 1;
+            offset = [
+                divV.offsetLeft - (event.clientX || event.touches[0].clientX || 0),
+                divV.offsetTop - (event.clientY || event.touches[0].clientY || 0)
+            ];
+        }, {passive: true});
+    });
 
-    document.addEventListener('mouseup', function() {
-        if (flag == 1) searchVideo();
-        flag = 0;
-    }, true);
+    ['mouseup', 'touchend'].forEach(function (e) {
+        document.addEventListener(e, function () {
+            if (flag === 1) searchVideo();
+            flag = 0;
+        }, true);
+    });
 
-    document.addEventListener('mousemove', function(event) {
-        if (flag >= 1) {
-            flag = 2;
-            mousePosition = {
-                x : event.clientX,
-                y : event.clientY
-            };
-            divV.style.left = (mousePosition.x + offset[0]) + 'px';
-            divV.style.top = (mousePosition.y + offset[1]) + 'px';
-        }
-    }, true);
-
+    ['mousemove', 'touchmove'].forEach(function (e) {
+        document.addEventListener(e, function (event) {
+            if (flag >= 1) {
+                flag = 2;
+                mousePosition = {
+                    x: (event.clientX || event.touches[0].clientX || 0),
+                    y: (event.clientY || event.touches[0].clientY || 0)
+                };
+                divV.style.left = (mousePosition.x + offset[0]) + 'px';
+                divV.style.top = (mousePosition.y + offset[1]) + 'px';
+            }
+        }, true);
+    });
 })();
