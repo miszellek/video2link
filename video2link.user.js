@@ -41,7 +41,7 @@
             };
 
             for (var v = 0; v < video.length; v++) {
-                if (video[v].src != '') {
+                if (video[v].src !== '') {
                     appendVideoLink(video[v].src);
                 }
 
@@ -49,7 +49,7 @@
 
                 if (source.length > 0) {
                     for (var s = 0; s < source.length; s++) {
-                        if (source[s].src != '') {
+                        if (source[s].src !== '') {
                             appendVideoLink(source[s].src);
                         }
                     }
