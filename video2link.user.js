@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         video2link
 // @namespace    video2link
-// @version      0.9
+// @version      0.10
 // @description  video tag to url link
 // @author       miszel
 // @match        *://*/*
@@ -75,6 +75,7 @@
     divV.style.borderRadius = '5px';
     divV.style.userSelect = 'none';
     divV.style.setProperty ('-moz-user-select', 'none', 'important');
+    divV.style.touchAction= 'none';
     divV.innerText = '\u25B6';
     //divV.onclick = searchVideo;
     document.body.appendChild(divV);
@@ -112,6 +113,6 @@
                 divV.style.top = (mousePosition.y + offset[1]) + 'px';
                 e.preventDefault;
             }
-        }, true);
+        }, {passive: false});
     });
 })();
