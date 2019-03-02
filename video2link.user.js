@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         video2link
 // @namespace    video2link
-// @version      0.8
+// @version      0.9
 // @description  video tag to url link
 // @author       miszel
 // @match        *://*/*
@@ -110,6 +110,7 @@
                 };
                 divV.style.left = (mousePosition.x + offset[0]) + 'px';
                 divV.style.top = (mousePosition.y + offset[1]) + 'px';
+                e.preventDefault;
             }
         }, true);
     });
