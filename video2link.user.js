@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         video2link
 // @namespace    video2link
-// @version      0.10
+// @version      0.11
 // @description  video tag to url link
 // @author       miszel
 // @match        *://*/*
@@ -33,7 +33,9 @@
                     a.href = src;
                     a.text = src.substr(src.lastIndexOf('/') + 1);
                     a.style.fontSize = '2rem';
-                    a.style.wordBreak = "break-all";
+                    a.style.wordBreak = 'break-all';
+                    a.style.userSelect = 'none';
+                    a.style.setProperty('-moz-user-select', 'none', 'important');
                     if (links.length > 0) div.appendChild(document.createElement('br'));
                     div.appendChild(a);
                     links[links.length] = src;
@@ -74,7 +76,7 @@
     divV.style.zIndex = 2147483647;
     divV.style.borderRadius = '5px';
     divV.style.userSelect = 'none';
-    divV.style.setProperty ('-moz-user-select', 'none', 'important');
+    divV.style.setProperty('-moz-user-select', 'none', 'important');
     divV.style.touchAction= 'none';
     divV.innerText = '\u25B6';
     //divV.onclick = searchVideo;
