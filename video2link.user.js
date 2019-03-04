@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         video2link
 // @namespace    video2link
-// @version      0.12
+// @version      0.13
 // @description  video tag to url link
 // @author       miszel
 // @match        *://*/*
@@ -31,13 +31,11 @@
                     var a = document.createElement('a');
                     a.target = '_blank';
                     a.href = src;
-                    var span = document.createElement('span');
-                    span.innerHTML = src.substr(src.lastIndexOf('/') + 1);
-                    span.style.fontSize = '2rem';
-                    span.style.wordBreak = 'break-all';
-                    span.style.userSelect = 'none';
-                    span.style.setProperty('-moz-user-select', 'none', 'important');
-                    a.appendChild(span);
+                    a.text = src.substr(src.lastIndexOf('/') + 1);
+                    a.style.fontSize = '2rem';
+                    a.style.wordBreak = 'break-all';
+                    a.style.userSelect = 'none';
+                    a.style.setProperty('-moz-user-select', 'none', 'important');
                     if (links.length > 0) div.appendChild(document.createElement('br'));
                     div.appendChild(a);
                     links[links.length] = src;
